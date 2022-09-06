@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public GameObject shootObj;
     public Shoot shootscript;
 
-
     public GameObject hold;
     public bool isHold;
 
@@ -28,5 +27,4 @@ public class GameManager : MonoBehaviour
         isHold = false;
         shootscript.enabled = false;
     }
-
 }

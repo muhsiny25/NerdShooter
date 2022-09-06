@@ -8,6 +8,7 @@ public class Object : MonoBehaviour
 {
     Vector3 target;
     bool isHold;
+
     void Start()
     {
         isHold = false;
@@ -30,13 +31,13 @@ public class Object : MonoBehaviour
     {
         if (GameManager.instance.obj.Contains(this.gameObject) && GameManager.instance.shootObj == null)
         {
-            Debug.Log("içinde var");
+            //Debug.Log("içinde var");
 
             GameManager.instance.shootObj = this.gameObject;
             transform.DOMove(GameManager.instance.hold.transform.position, 0.5f).OnComplete(() => {
                     isHold = true;
                     UIManager.Instance.ShootActive(true);
-                    Debug.Log(GameManager.instance.shootscript.isActiveAndEnabled);
+                    //Debug.Log(GameManager.instance.shootscript.isActiveAndEnabled);
                     GameManager.instance.isHold = true;
                 });
             transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
@@ -50,10 +51,34 @@ public class Object : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player") && !collision.gameObject.CompareTag("Object"))
         {
             Destroy(this.gameObject);
+
+            Debug.Log(collision.gameObject);
+
         }
         if (collision.gameObject.CompareTag("Student"))
         {
+            Health health = collision.gameObject.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(1, gameObject);
+            }
+            Destroy(this.gameObject);
             Debug.Log("çarptı");
         }
     }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Student"))
+    //    {
+    //        Health health = other.GetComponent<Health>();
+    //        if (health != null)
+    //        {
+    //            health.TakeDamage(1, gameObject);
+    //        }
+    //        Destroy(this.gameObject);
+    //        Debug.Log(other.gameObject);
+    //        Debug.Log("çarptı");
+    //    }
+    //}
+    //
 }
