@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject hold;
     public bool isHold;
 
+    public ParticleSystem Explosion;
     private void Awake()
     {
         if (instance == null)
@@ -20,7 +21,6 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         shootscript = FindObjectOfType<Shoot>();
-
     }
     void Start()
     {

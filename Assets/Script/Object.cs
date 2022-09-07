@@ -8,11 +8,12 @@ public class Object : MonoBehaviour
 {
     Vector3 target;
     bool isHold;
-
+    public bool hitDamage;
     void Start()
     {
         isHold = false;
         GameManager.instance.obj.Add(gameObject);
+        
     }
 
     void Update()
@@ -25,6 +26,8 @@ public class Object : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameManager.instance.obj.Remove(GameManager.instance.shootObj);
+            GameManager.instance.Explosion.transform.position = this.gameObject.transform.position;
+            GameManager.instance.Explosion.Play();
         }
     }
     public void OnMouseUp()
@@ -48,11 +51,13 @@ public class Object : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        GameManager.instance.Explosion.transform.position = this.gameObject.transform.position;
         if (!collision.gameObject.CompareTag("Player") && !collision.gameObject.CompareTag("Object"))
         {
             Destroy(this.gameObject);
 
-            Debug.Log(collision.gameObject);
+            //Debug.Log(collision.gameObject);
+
 
         }
         if (collision.gameObject.CompareTag("Student"))
@@ -60,11 +65,12 @@ public class Object : MonoBehaviour
             Health health = collision.gameObject.GetComponent<Health>();
             if (health != null)
             {
-                health.TakeDamage(1, gameObject);
+                health.TakeDamage(1, gameObject, this.gameObject);
             }
             Destroy(this.gameObject);
             Debug.Log("çarptı");
         }
+        GameManager.instance.Explosion.Play();
     }
     //private void OnTriggerEnter(Collider other)
     //{
